@@ -190,3 +190,12 @@ void sortPolynomial(Polynomial* polynomial) {
         lptr = ptr1;
     } while (swapped);
 }
+
+void multiplyByScalar(Polynomial* polynomial, float scalar) {
+    Term* currentTerm = polynomial->head;
+    
+    while (currentTerm != NULL) {
+        currentTerm->coefficient *= scalar;
+        currentTerm = currentTerm->next;
+    }
+}

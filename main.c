@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
         Polynomial polynomial1 = parsePolynomial(result[0]);
         printPolynomial(&polynomial1);
         Polynomial polynomial2 = parsePolynomial(result[1]);
+        multiplyByScalar(&polynomial2, -1);
         printPolynomial(&polynomial2);
         Polynomial polynomial3 = addPolynomials(polynomial1, polynomial2);
         printPolynomial(&polynomial3);

@@ -16,6 +16,7 @@ typedef struct Polynomial {
     Term* head;
 } Polynomial;
 
+void multiplyByScalar(Polynomial* polynomial, float scalar);
 void sortPolynomial(Polynomial* polynomial);
 Polynomial addPolynomials(Polynomial p1, Polynomial p2);
 int split(char *string, char *delimiter, char **result, int maxTokens);
