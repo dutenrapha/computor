@@ -66,7 +66,7 @@ Polynomial parsePolynomial(char* str) {
 void printPolynomial(const Polynomial* polynomial) {
     const Term* current = polynomial->head;
     int isFirstTerm = 1;
-    printf("Reduced form:");
+    printf("Reduced form: ");
     while (current != NULL) {
         if (current->coefficient != 0) {
             if (!isFirstTerm && current->coefficient > 0) {

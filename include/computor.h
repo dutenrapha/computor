@@ -22,6 +22,9 @@ typedef struct {
     float x2;
 } Solution;
 
+void handleDegreeOne(Polynomial* polynomial);
+void handleDegreeTwo(Polynomial* polynomial);
+void handlePolynomial(Polynomial* polynomial);
 Solution* solveQuadraticEquation(Polynomial* polynomial);
 int findPolynomialDegree(Polynomial* polynomial);
 Solution* solveFirstDegreePolynomial(Polynomial* polynomial);
