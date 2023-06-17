@@ -37,13 +37,14 @@ static Term* parseTerm(char** polynomial) {
     return newTerm;
 }
 
-Polynomial parsePolynomial(char* argv[]) {
+Polynomial parsePolynomial(char* str) {
     Polynomial polynomial;
     polynomial.head = NULL;
 
-    while (strlen(argv[1]) != 0) {
+    str = convertPolynomialFormat(str);
+    while (strlen(str) != 0) {
         Term* term = (Term*)malloc(sizeof(Term));
-        term = parseTerm(&argv[1]);
+        term = parseTerm(&str);
         if (term == NULL)
         {
             break;
@@ -59,7 +60,7 @@ Polynomial parsePolynomial(char* argv[]) {
             current->next = term;
         }
     }
-
+    sortPolynomial(&polynomial);
     return polynomial;
 }
 
@@ -84,4 +85,108 @@ void freePolynomial(Polynomial* polynomial) {
         current = next;
     }
     polynomial->head = NULL;
+}
+
+
+static Term* createTerm(float coefficient, int exponent) {
+    Term* newTerm = (Term*)malloc(sizeof(Term));
+    newTerm->coefficient = coefficient;
+    newTerm->exponent = exponent;
+    newTerm->next = NULL;
+    return newTerm;
+}
+
+Polynomial addPolynomials(Polynomial p1, Polynomial p2) {
+    Polynomial result;
+    result.head = NULL;
+
+    Term* current1 = p1.head;
+    Term* current2 = p2.head;
+    Term* currentResult = NULL;
+
+    while (current1 != NULL || current2 != NULL) {
+        Term* newTerm = NULL;
+
+        if (current1 == NULL) {
+            newTerm = createTerm(current2->coefficient, current2->exponent);
+            current2 = current2->next;
+        } else if (current2 == NULL) {
+            newTerm = createTerm(current1->coefficient, current1->exponent);
+            current1 = current1->next;
+        } else {
+            if (current1->exponent > current2->exponent) {
+                newTerm = createTerm(current2->coefficient, current2->exponent);
+                current2 = current2->next;
+            } else if (current2->exponent > current1->exponent) {
+                newTerm = createTerm(current1->coefficient, current1->exponent);
+                current1 = current1->next;
+            } else {
+                newTerm = createTerm(current1->coefficient + current2->coefficient, current1->exponent);
+                current1 = current1->next;
+                current2 = current2->next;
+            }
+        }
+
+        if (result.head == NULL || newTerm->exponent > result.head->exponent) {
+            newTerm->next = result.head;
+            result.head = newTerm;
+        } else {
+            currentResult = result.head;
+            while (currentResult->next != NULL && currentResult->next->exponent > newTerm->exponent) {
+                currentResult = currentResult->next;
+            }
+            newTerm->next = currentResult->next;
+            currentResult->next = newTerm;
+        }
+    }
+    sortPolynomial(&result);
+    return result;
+}
+
+
+void insertTerm(Polynomial* polynomial, float coefficient, int exponent) {
+    Term* newTerm = (Term*)malloc(sizeof(Term));
+    newTerm->coefficient = coefficient;
+    newTerm->exponent = exponent;
+    newTerm->next = NULL;
+
+    if (polynomial->head == NULL) {
+        polynomial->head = newTerm;
+    } else {
+        Term* current = polynomial->head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newTerm;
+    }
+}
+
+void sortPolynomial(Polynomial* polynomial) {
+    if (polynomial->head == NULL) {
+        insertTerm(polynomial, 0.0, 0);
+        return;
+    }
+
+    int swapped;
+    Term* ptr1;
+    Term* lptr = NULL;
+
+    do {
+        swapped = 0;
+        ptr1 = polynomial->head;
+
+        while (ptr1->next != lptr) {
+            if (ptr1->exponent > ptr1->next->exponent) {
+                float tempCoefficient = ptr1->coefficient;
+                int tempExponent = ptr1->exponent;
+                ptr1->coefficient = ptr1->next->coefficient;
+                ptr1->exponent = ptr1->next->exponent;
+                ptr1->next->coefficient = tempCoefficient;
+                ptr1->next->exponent = tempExponent;
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    } while (swapped);
 }
