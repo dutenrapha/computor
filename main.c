@@ -1,7 +1,7 @@
 #include "include/computor.h"
 
 int main(int argc, char* argv[]) {
-    char* result[2]; // Array para armazenar os tokens divididos
+    char* result[2];
     int maxTokens = 2;
     int tokenCount;
     Polynomial polynomial1;

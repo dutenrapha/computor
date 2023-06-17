@@ -1,24 +1,23 @@
 #include "../include/computor.h"
 
 Solution* solveFirstDegreePolynomial(Polynomial* polynomial) {
-    Solution* solution = (Solution*)malloc(sizeof(Solution));  // Allocate memory for solution
+    Solution* solution = (Solution*)malloc(sizeof(Solution));
     Term* term = polynomial->head;
     float coefficient;
 
     coefficient = term->next->coefficient;
     if (coefficient == 0) {
-        free(solution);  // Free the allocated memory before returning NULL
+        free(solution);
         return NULL;
     }
-
     solution->x1 = -term->coefficient / coefficient;
     return solution;
 }
 
 
 
-Solution* solveQuadraticEquation(Polynomial* polynomial) {
-    
+Solution* solveQuadraticEquation(Polynomial* polynomial)
+{    
     float a;
     float b;
     float c;
@@ -31,7 +30,6 @@ Solution* solveQuadraticEquation(Polynomial* polynomial) {
     while (currentTerm != NULL) {
         int exponent = currentTerm->exponent;
         float coefficient = currentTerm->coefficient;
-        
         if (exponent == 2) {
             a += coefficient;
         } else if (exponent == 1) {
@@ -42,16 +40,12 @@ Solution* solveQuadraticEquation(Polynomial* polynomial) {
         
         currentTerm = currentTerm->next;
     }
-    
     float discriminant = b * b - 4 * a * c;
-    
     if (discriminant < 0) {
         free(solution);
-        return NULL; // Não há solução real
+        return NULL;
     }
-    
     solution->x1 = (-b + sqrt(discriminant)) / (2 * a);
     solution->x2 = (-b - sqrt(discriminant)) / (2 * a);
-    
     return solution;
 }

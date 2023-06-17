@@ -2,38 +2,29 @@
 #include "../include/computor.h"
 
 static Term* parseTerm(char** polynomial) {
-    if (!polynomial || !(*polynomial) || strlen(*polynomial) == 0) {
-        return NULL;
-    }
-
     float coefficient;
     int exponent;
     char var;
 
-    // Tenta extrair o coeficiente, a variável e o expoente do início da string.
+    if (!polynomial || !(*polynomial) || strlen(*polynomial) == 0) {
+        return NULL;
+    }
     int scanned = sscanf(*polynomial, "%f * %c^%d", &coefficient, &var, &exponent);
     if(scanned != 3) {
         return NULL;
     }
-
-    // Cria um novo termo.
     Term* newTerm = (Term*) malloc(sizeof(Term));
     newTerm->coefficient = coefficient;
     newTerm->exponent = exponent;
     newTerm->next = NULL;
-
-    // Encontra o final do termo atual na string.
     char* endTerm = strstr(*polynomial, " * X^");
     if (endTerm) {
-        endTerm += strlen(" * X^");  // Pula para o final do termo.
+        endTerm += strlen(" * X^");
         while (*endTerm && *endTerm != '+' && *endTerm != '-') {  
-            endTerm++;  // Procura pelo início do próximo termo ou pelo final da string.
+            endTerm++;
         }
     }
-
-    // Atualiza a string do polinômio para apontar para o início do próximo termo.
     *polynomial = endTerm;
-
     return newTerm;
 }
 
@@ -63,22 +54,21 @@ Polynomial parsePolynomial(char* str) {
     sortPolynomial(&polynomial);
     return polynomial;
 }
+
 void printPolynomial(const Polynomial* polynomial) {
     const Term* current = polynomial->head;
     int isFirstTerm = 1;
+
     printf("Reduced form: ");
     while (current != NULL) {
         if (current->coefficient != 0) {
             if (!isFirstTerm && current->coefficient > 0) {
                 printf(" + ");
             }
-
             if (current->coefficient < 0) {
                 printf("- ");
             }
-
             printf("%.1f * X^%d", fabs(current->coefficient), current->exponent);
-
             isFirstTerm = 0;
         }
         else if (current->next == NULL)
@@ -86,16 +76,14 @@ void printPolynomial(const Polynomial* polynomial) {
             printf(" 0 * X^1 ");
             break;
         }
-
         current = current->next;
     }
     printf(" = 0\n");
 }
 
-
-
 void freePolynomial(Polynomial* polynomial) {
     Term* current = polynomial->head;
+
     while (current != NULL) {
         Term* next = current->next;
         free(current);
@@ -104,9 +92,9 @@ void freePolynomial(Polynomial* polynomial) {
     polynomial->head = NULL;
 }
 
-
 static Term* createTerm(float coefficient, int exponent) {
     Term* newTerm = (Term*)malloc(sizeof(Term));
+
     newTerm->coefficient = coefficient;
     newTerm->exponent = exponent;
     newTerm->next = NULL;
@@ -116,7 +104,6 @@ static Term* createTerm(float coefficient, int exponent) {
 Polynomial addPolynomials(Polynomial p1, Polynomial p2) {
     Polynomial result;
     result.head = NULL;
-
     Term* current1 = p1.head;
     Term* current2 = p2.head;
     Term* currentResult = NULL;
@@ -143,7 +130,6 @@ Polynomial addPolynomials(Polynomial p1, Polynomial p2) {
                 current2 = current2->next;
             }
         }
-
         if (result.head == NULL || newTerm->exponent > result.head->exponent) {
             newTerm->next = result.head;
             result.head = newTerm;
@@ -178,16 +164,16 @@ void insertTerm(Polynomial* polynomial, float coefficient, int exponent) {
     }
 }
 
-void sortPolynomial(Polynomial* polynomial) {
-    if (polynomial->head == NULL) {
-        insertTerm(polynomial, 0.0, 0);
-        return;
-    }
-
+void sortPolynomial(Polynomial* polynomial) 
+{
     int swapped;
     Term* ptr1;
     Term* lptr = NULL;
 
+    if (polynomial->head == NULL) {
+        insertTerm(polynomial, 0.0, 0);
+        return;
+    }
     do {
         swapped = 0;
         ptr1 = polynomial->head;
@@ -210,7 +196,7 @@ void sortPolynomial(Polynomial* polynomial) {
 
 void multiplyByScalar(Polynomial* polynomial, float scalar) {
     Term* currentTerm = polynomial->head;
-    
+
     while (currentTerm != NULL) {
         currentTerm->coefficient *= scalar;
         currentTerm = currentTerm->next;
@@ -227,6 +213,5 @@ int findPolynomialDegree(Polynomial* polynomial) {
         }
         term = term->next;
     }
-
     return degree;
 }

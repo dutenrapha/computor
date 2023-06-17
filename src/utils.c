@@ -3,15 +3,14 @@
 
 int split(char *string, char *delimiter, char **result, int maxTokens) {
     int tokenCount = 0;
-    char *token = strtok(string, delimiter); // Divide a string em tokens
-
+    char *token = strtok(string, delimiter); 
     while (token != NULL && tokenCount < maxTokens) {
-        result[tokenCount] = token; // Armazena o token no array resultante
-        token = strtok(NULL, delimiter); // Obtém o próximo token
+        result[tokenCount] = token;
+        token = strtok(NULL, delimiter);
         tokenCount++;
     }
 
-    return tokenCount; // Retorna o número de tokens encontrados
+    return tokenCount;
 }
 
 void handleDegreeOne(Polynomial* polynomial) {
