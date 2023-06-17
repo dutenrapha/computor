@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 typedef struct Term {
     float coefficient;
@@ -16,6 +17,14 @@ typedef struct Polynomial {
     Term* head;
 } Polynomial;
 
+typedef struct {
+    float x1;
+    float x2;
+} Solution;
+
+Solution* solveQuadraticEquation(Polynomial* polynomial);
+int findPolynomialDegree(Polynomial* polynomial);
+Solution* solveFirstDegreePolynomial(Polynomial* polynomial);
 void multiplyByScalar(Polynomial* polynomial, float scalar);
 void sortPolynomial(Polynomial* polynomial);
 Polynomial addPolynomials(Polynomial p1, Polynomial p2);

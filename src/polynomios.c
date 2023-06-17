@@ -63,19 +63,36 @@ Polynomial parsePolynomial(char* str) {
     sortPolynomial(&polynomial);
     return polynomial;
 }
-
 void printPolynomial(const Polynomial* polynomial) {
     const Term* current = polynomial->head;
-
+    int isFirstTerm = 1;
+    printf("Reduced form:");
     while (current != NULL) {
-        printf("%.1f * X^%d", current->coefficient, current->exponent);
-        current = current->next;
-        if (current != NULL) {
-            printf(" + ");
+        if (current->coefficient != 0) {
+            if (!isFirstTerm && current->coefficient > 0) {
+                printf(" + ");
+            }
+
+            if (current->coefficient < 0) {
+                printf("- ");
+            }
+
+            printf("%.1f * X^%d", fabs(current->coefficient), current->exponent);
+
+            isFirstTerm = 0;
         }
+        else if (current->next == NULL)
+        {
+            printf(" 0 * X^1 ");
+            break;
+        }
+
+        current = current->next;
     }
-    printf("\n");
+    printf(" = 0\n");
 }
+
+
 
 void freePolynomial(Polynomial* polynomial) {
     Term* current = polynomial->head;
@@ -198,4 +215,18 @@ void multiplyByScalar(Polynomial* polynomial, float scalar) {
         currentTerm->coefficient *= scalar;
         currentTerm = currentTerm->next;
     }
+}
+
+int findPolynomialDegree(Polynomial* polynomial) {
+    int degree = 0;
+    Term* term = polynomial->head;
+
+    while (term != NULL) {
+        if (term->exponent > degree) {
+            degree = term->exponent;
+        }
+        term = term->next;
+    }
+
+    return degree;
 }

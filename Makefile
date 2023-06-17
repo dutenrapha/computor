@@ -27,15 +27,15 @@ fclean: clean
 re: fclean all
 
 $(MAIN_O): $(MAIN)
-	@$(CC) $(FLAGS) $(INC_PATH) -c $< -o $@
+	$(CC) $(FLAGS) $(INC_PATH) -c $< -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(FLAGS) -c $< -o $@  		
+	mkdir -p $(OBJ_PATH)
+	$(CC) $(FLAGS) -c $< -o $@  		
 
 $(LIB_PATH)/%.a:
-	@mkdir -p $(LIB_PATH)
-	@ar rcs $(LIB) $(OBJ) 
+	mkdir -p $(LIB_PATH)
+	ar rcs $(LIB) $(OBJ) 
 
 $(EXEC): $(MAIN_O)
-	@$(CC) $< $(LIB) -o $@
+	$(CC) $< $(LIB) -lm -o $@
