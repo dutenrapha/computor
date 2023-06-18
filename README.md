@@ -43,7 +43,7 @@ To get started with the Computor project, follow these steps:
 2. Navigate to the project directory.
 
 ```shell
-$ git clone <repository_url>
+$ git clone git@github.com:dutenrapha/computor.git
 $ cd Computor
 ```
 
