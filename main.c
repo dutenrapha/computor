@@ -9,6 +9,19 @@ int main(int argc, char* argv[]) {
     Polynomial polynomial3;
 
     if (argc == 2) {
+        transformX(argv[1]);
+        if (!isCharactersValid(argv[1]))
+        {
+            return(1);
+        }
+        if (!isSignsValid(argv[1]))
+        {
+            return(1);
+        }
+        if (!isSignsPresent(argv[1]))
+        {
+            return(1);
+        }
         tokenCount = split(argv[1], "=", result, maxTokens);
         if (tokenCount != 2) {
             return 0;

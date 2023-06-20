@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdbool.h>
 
 typedef struct Term {
     float coefficient;
@@ -22,6 +23,10 @@ typedef struct {
     float x2;
 } Solution;
 
+void transformX(char* str);
+bool isSignsPresent(const char* str);
+bool isSignsValid(const char* str);
+bool isCharactersValid(const char* str);
 void handleDegreeOne(Polynomial* polynomial);
 void handleDegreeTwo(Polynomial* polynomial);
 void handlePolynomial(Polynomial* polynomial);
