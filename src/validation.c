@@ -131,3 +131,43 @@ void transformX(char* str) {
         }
     }
 }
+
+bool isExpoentValid(const char* str) {
+    if (str == NULL) {
+        printf("Error: Exponent not formatted\n");
+        return false;
+    }
+    
+    bool wasX = false;
+    bool wasExponent = false;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ' ') continue;
+        if (wasX) {
+            if (str[i] != '^') {
+                printf("Error: Exponent not formatted\n");
+                return false;
+            } else {
+                wasExponent = true;
+                wasX = false;
+                continue;
+            }
+        }
+        if (wasExponent) {
+            if (!isdigit((unsigned char)str[i])) {
+                printf("Error: Exponent not formatted\n");
+                return false;
+            } else {
+                wasExponent = false;
+                continue;
+            }
+        }
+        if (str[i] == 'X') {
+            wasX = true;
+        }
+    }
+    if (wasX || wasExponent) {
+        printf("Error: Exponent not formatted\n");
+        return false;
+    }   
+    return true;
+}

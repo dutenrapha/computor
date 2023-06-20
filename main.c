@@ -14,6 +14,10 @@ int main(int argc, char* argv[]) {
         {
             return(1);
         }
+        if (!isExpoentValid(argv[1]))
+        {
+            return(1);
+        }
         if (!isSignsValid(argv[1]))
         {
             return(1);

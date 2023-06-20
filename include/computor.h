@@ -26,6 +26,7 @@ typedef struct {
 void removeZeroTerms(Polynomial* polynomial);
 void transformX(char* str);
 bool isSignsPresent(const char* str);
+bool isExpoentValid(const char* str);
 bool isSignsValid(const char* str);
 bool isCharactersValid(const char* str);
 void handleDegreeOne(Polynomial* polynomial);
