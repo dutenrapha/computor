@@ -23,6 +23,7 @@ typedef struct {
     float x2;
 } Solution;
 
+void removeZeroTerms(Polynomial* polynomial);
 void transformX(char* str);
 bool isSignsPresent(const char* str);
 bool isSignsValid(const char* str);

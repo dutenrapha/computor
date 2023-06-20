@@ -23,7 +23,14 @@ void handleDegreeOne(Polynomial* polynomial) {
     if (solution != NULL) {
         printf("The solution is: %f\n", solution->x1);
     } else {
+        if (polynomial->head->coefficient !=0)
+        {
+            printf("The solution is: 0.00000\n");
+        }
+        else
+        {
         printf("Polynomial has infinite solutions.\n");
+        }
     }
 }
 
@@ -50,5 +57,27 @@ void handlePolynomial(Polynomial* polynomial) {
     }
 }
 
+void removeZeroTerms(Polynomial* polynomial) {
+    Term* current = polynomial->head;
+    Term* previous = NULL;
 
+    while (current != NULL) {
+        if (current->coefficient == 0 && current->exponent > 1) {
+            // Remover o termo atual
+            if (previous == NULL) {
+                // O termo atual é o primeiro da lista
+                polynomial->head = current->next;
+            } else {
+                previous->next = current->next;
+            }
 
+            // Liberar a memória ocupada pelo termo removido
+            Term* temp = current;
+            current = current->next;
+            free(temp);
+        } else {
+            previous = current;
+            current = current->next;
+        }
+    }
+}

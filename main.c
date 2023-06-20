@@ -30,6 +30,20 @@ int main(int argc, char* argv[]) {
         polynomial2 = parsePolynomial(result[1]);
         multiplyByScalar(&polynomial2, -1);
         polynomial3 = addPolynomials(polynomial1, polynomial2);
+        removeZeroTerms(&polynomial3);
+        int degree = findPolynomialDegree(&polynomial3);
+        if (degree == 0)
+        {
+            if(polynomial3.head->coefficient !=0)
+            {
+                printf("FALSE\n");
+            }
+            else
+            {
+                printf("TRUE\n");
+            }
+            return (0);
+        }
         printPolynomial(&polynomial3);
         handlePolynomial(&polynomial3);
         freePolynomial(&polynomial1);

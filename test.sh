@@ -11,9 +11,9 @@ print_red() {
 }
 
 # Array com as equações
-equations=("42*X^1 = 42*X^1" "4*X^1 - 5*X^0 = 15*X^0" "1*X^2 - 3*X^1 + 2*X^0 = 0*X^0" "1 * X^2 = - 1 * X^0" "1*X^3 - 6*X^2 + 11*X^1 - 6*X^0 = 0*X^0" "1*X^3 - 6*X^2 + 11*X^1 - 6*X^0 = 0*X ^  / 0")
+equations=("1*X^0 + 10 *x^2= 13*X^0 + 10 * X^2" "42*X^0 = 42*X^0 " "1*X^0 = 13*X^0 " "42*X^1 = 42*X^1 " "1*X^1 = 13*X^1 " "4*X^1 - 5*X^0 = 15*X^0" "1*X^2 - 3*X^1 + 2*X^0 = 0*X^0" "1 * X^2 = - 1 * X^0" "1*X^3 - 6*X^2 + 11*X^1 - 6*X^0 = 0*X^0" "1*X^3 - 6*X^2 + 11*X^1 - 6*X^0 = 0*X ^  / 0")
 # Array com as soluções correspondentes
-solutions=("Polynomial has infinite solutions." "X = 5" "X = 2, X = 1" "This polynomial equation does not have a solution in the set of real numbers." "The polynomial degree is strictly greater than 2, I can't solve." "Error: ...")
+solutions=("TRUE" "TRUE" "FALSE" "Polynomial has infinite solutions." "0.00000"  "X = 5" "X = 2, X = 1" "This polynomial equation does not have a solution in the set of real numbers." "The polynomial degree is strictly greater than 2, I can't solve." "Error: ...")
 
 # Loop para executar o programa com cada equação
 for i in ${!equations[@]}

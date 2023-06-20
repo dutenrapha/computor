@@ -41,14 +41,19 @@ Polynomial parsePolynomial(char* str) {
             break;
         }
         term->next = NULL;
-        if (polynomial.head == NULL) {
-            polynomial.head = term;
-        } else {
-            Term* current = polynomial.head;
-            while (current->next != NULL) {
-                current = current->next;
+        if(term->coefficient != 0){
+            if (polynomial.head == NULL) {
+                polynomial.head = term;
+            } else {
+                Term* current = polynomial.head;
+                while (current->next != NULL) {
+                    current = current->next;
+                }
+                current->next = term;
             }
-            current->next = term;
+        }
+        else {
+            free(term);
         }
     }
     sortPolynomial(&polynomial);
@@ -208,7 +213,8 @@ int findPolynomialDegree(Polynomial* polynomial) {
     Term* term = polynomial->head;
 
     while (term != NULL) {
-        if (term->exponent > degree) {
+        
+         if (term->exponent > degree) {
             degree = term->exponent;
         }
         term = term->next;
